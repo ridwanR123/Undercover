@@ -43,6 +43,9 @@ html,body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}body{
 #app{padding-top:max(14px,var(--safe-area-inset-top,0px));padding-bottom:max(30px,var(--safe-area-inset-bottom,0px))}
 .r-w{background:#1f9d6b!important}.r-u{background:linear-gradient(135deg,#d6336c,#e8590c)!important}.r-m{background:#495057!important}.r-b{background:linear-gradient(135deg,#9c36b5,#f783ac)!important}.r-d{background:linear-gradient(135deg,#1c7ed6,#15aabf)!important}
 .hero{text-align:center;padding:8px 0 0}.hero .em{font-size:76px}.hero h1{margin:0}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 0;font-weight:600}
+.sw input{width:52px;height:30px;flex:none;appearance:none;-webkit-appearance:none;border-radius:99px;background:var(--bd);position:relative;padding:0;border:0;transition:.2s}
+.sw input:checked{background:var(--ac)}.sw input::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}.sw input:checked::after{left:25px}
 </style></head><body><div id="app"></div>
 <script>
 const W={
@@ -77,7 +80,7 @@ const RD={w:'Dapat kata yang sama dengan mayoritas. Temukan penyusup!',u:'Kata k
 const R=a=>a[Math.floor(Math.random()*a.length)];
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const app=document.getElementById('app');
-let cfg={n:6,u:1,m:1,b:0,d:0,cats:new Set(Object.keys(W)),custom:''};
+let cfg={mwf:0,hide:1,n:6,u:1,m:1,b:0,d:0,cats:new Set(Object.keys(W)),custom:''};
 let S={};
 function setup(msg){cfg.prev=null;S={step:'setup'};
 app.innerHTML=`<div class="hero"><div class="em">🕵️</div><h1>Undercover</h1></div><p class="s ctr">Game tebak kata untuk ${Object.keys(W).length} kategori, ${total} kata, dan ribuan kombinasi pasangan. Cukup satu HP.</p>
@@ -87,6 +90,9 @@ ${msg?`<div class="c" style="border-color:var(--ac)">${msg}</div>`:''}
 <div><label>Mr. White</label><select id="m">${[0,1,2].map(i=>`<option ${i==cfg.m?'selected':''}>${i}</option>`).join('')}</select></div>
 <div><label>Badut</label><select id="b">${[0,1].map(i=>`<option ${i==cfg.b?'selected':''}>${i}</option>`).join('')}</select></div>
 <div><label>Detektif</label><select id="d">${[0,1].map(i=>`<option ${i==cfg.d?'selected':''}>${i}</option>`).join('')}</select></div></div></div>
+<div class="c"><b>⚙️ Pengaturan</b>
+<label class="sw"><span>Sembunyikan peran<br><small class="tag">Warga & Undercover hanya lihat kata</small></span><input type="checkbox" id="hr" ${cfg.hide?'checked':''}></label>
+<label class="sw"><span>Mr. White boleh jalan pertama<br><small class="tag">Jika mati, giliran pertama bebas siapa saja</small></span><input type="checkbox" id="mf" ${cfg.mwf?'checked':''}></label></div>
 <div class="c"><label>Kategori kata</label><div class="chips" id="ch">${Object.keys(W).map(k=>`<span class="chip ${cfg.cats.has(k)?'on':''}" data-k="${k}">${k}</span>`).join('')}</div>
 <label>Pasangan kata sendiri (format: kata1|kata2, satu per baris)</label><textarea id="cu" placeholder="Kopi|Teh">${cfg.custom}</textarea></div>
 <button id="go">Mulai Game</button>
@@ -94,7 +100,7 @@ ${msg?`<div class="c" style="border-color:var(--ac)">${msg}</div>`:''}
 document.getElementById('ch').onclick=e=>{const k=e.target.dataset.k;if(!k)return;cfg.cats.has(k)?cfg.cats.delete(k):cfg.cats.add(k);e.target.classList.toggle('on')};
 const nv=document.getElementById('nv');document.getElementById('mn').onclick=()=>{cfg.n=Math.max(4,cfg.n-1);nv.textContent=cfg.n};document.getElementById('pl').onclick=()=>{cfg.n=Math.min(20,cfg.n+1);nv.textContent=cfg.n};document.getElementById('go').onclick=start}
 function start(){const g=i=>document.getElementById(i).value;
-if(document.getElementById('cu')){cfg.custom=g('cu');['u','m','b','d'].forEach(k=>cfg[k]=+g(k))}
+if(document.getElementById('cu')){cfg.custom=g('cu');['u','m','b','d'].forEach(k=>cfg[k]=+g(k));cfg.hide=document.getElementById('hr').checked?1:0;cfg.mwf=document.getElementById('mf').checked?1:0}
 const n=cfg.n,bad=cfg.u+cfg.m;
 if(bad<1)return setup('Butuh minimal 1 Undercover atau Mr. White.');
 if(n-bad-cfg.b-cfg.d<1||n-bad<=bad)return setup('Terlalu banyak peran khusus. Warga harus lebih banyak dari penyusup.');
@@ -111,15 +117,15 @@ if(step=='reveal'){const p=S.P[S.i],last=S.i==S.P.length-1,av=(S.pool||[]).filte
 app.innerHTML=`<div class="prog">${S.P.map((x,k)=>`<i class="${k<S.i?'d':k==S.i?'n':''}"></i>`).join('')}</div><p class="s ctr">Pemain ${S.i+1} dari ${S.P.length}</p>
 ${!p.nm?`<div class="c ctr"><div class="em">👋</div><h2>Siapa namamu?</h2>${av.length?`<p class="s">Pilih namamu</p><div class="grid">${av.map(n=>`<div class="pc" data-p="${n}"><b class="av lg">${n[0].toUpperCase()}</b><div class="nm">${n}</div></div>`).join('')}</div><p class="s">atau tulis nama baru:</p>`:''}<input id="nmi" placeholder="Ketik namamu" maxlength="14" autocomplete="off">${S.err?'<p class="s" style="color:var(--ac)">Nama sudah dipakai, pilih nama lain.</p>':''}<button id="nb">Lanjut</button></div>`
 :!S.show?`<div class="c ctr"><div class="em">🎴</div><div class="big">${p.nm}</div><p class="s">Pastikan hanya kamu yang melihat layar.</p><button id="sw">👁 Ketuk untuk lihat peran</button></div>`
-:`<div class="c ctr card"><div class="em">${EM[p.r]}</div><span class="role r-${p.r}">${RN[p.r]}</span><div class="big">${p.word}</div>${p.r=='d'?'<p class="s">Petunjukmu ada di layar diskusi.</p>':''}<p class="s">${RD[p.r]}</p><button id="nx">${last?'Sembunyikan & mulai diskusi':'Sembunyikan & oper HP'}</button></div>`}`;
+:`<div class="c ctr card"><div class="em">${hid(p)?'🎴':EM[p.r]}</div>${hid(p)?'':`<span class="role r-${p.r}">${RN[p.r]}</span>`}<div class="big">${p.word}</div>${p.r=='d'?'<p class="s">Petunjukmu ada di layar diskusi.</p>':''}<p class="s">${hid(p)?'Ingat katamu dan jangan beri tahu siapa pun.':RD[p.r]}</p><button id="nx">${last?'Sembunyikan & mulai diskusi':'Sembunyikan & oper HP'}</button></div>`}`;
 const $=id=>document.getElementById(id);
 if(!p.nm){if(!av.length)$('nmi').focus();app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{p.nm=b.dataset.p;render()});$('nb').onclick=()=>{const v=$('nmi').value.trim().replace(/[<>"&]/g,'');if(!v)return;if(S.P.some(x=>x.nm.toLowerCase()==v.toLowerCase())){S.err=1;return render()}p.nm=v;S.err=0;render()}}
 else if(!S.show)$('sw').onclick=()=>{S.show=true;vb(30);render()};
-else $('nx').onclick=()=>{S.show=false;if(!last)S.i++;else{S.step='play';S.start=R(S.P.filter(x=>x.r!='m')).nm}render()}}
+else $('nx').onclick=()=>{S.show=false;if(!last)S.i++;else{S.step='play';S.start=pick(S.P)}render()}}
 else if(step=='play'){const al=S.P.filter(p=>p.alive);
 if(S.pend){const p=S.pend;app.innerHTML=`<div class="c ctr"><div class="em">🗳️</div><h2>Keluarkan ${p.nm}?</h2><button id="y">Ya, keluarkan</button><button class="g" id="n">Batal</button></div>`;document.getElementById('y').onclick=()=>{S.pend=null;elim(p)};document.getElementById('n').onclick=()=>{S.pend=null;render()};return}
 if(S.mv){if(S.mv==1){app.innerHTML=`<h2 class="ctr">Siapa kamu?</h2><p class="s ctr">Ketuk namamu. Pastikan pemain lain tidak melihat layar.</p><div class="grid">${al.map(p=>`<div class="pc" data-n="${p.nm}"><b class="av lg">${p.nm[0].toUpperCase()}</b><div class="nm">${p.nm}</div></div>`).join('')}</div><button class="g" id="n">Batal</button>`;app.querySelectorAll('.pc').forEach(b=>b.onclick=()=>{S.mv=S.P.find(x=>x.nm==b.dataset.n);render()})}
-else{const p=S.mv;app.innerHTML=`<div class="c ctr card"><div class="em">${EM[p.r]}</div><p class="s">${p.nm}, perankmu:</p><span class="role r-${p.r}">${RN[p.r]}</span><div class="big">${p.word}</div><p class="s">${RD[p.r]}</p><button id="n">Sembunyikan</button></div>`}
+else{const p=S.mv;app.innerHTML=`<div class="c ctr card"><div class="em">${hid(p)?'🎴':EM[p.r]}</div><p class="s">${p.nm}, ${hid(p)?'katamu':'perankmu'}:</p>${hid(p)?'':`<span class="role r-${p.r}">${RN[p.r]}</span>`}<div class="big">${p.word}</div><p class="s">${hid(p)?'Ingat katamu dan jangan beri tahu siapa pun.':RD[p.r]}</p><button id="n">Sembunyikan</button></div>`}
 document.getElementById('n').onclick=()=>{S.mv=0;render()};return}
 if(S.hv){const d=S.P.find(x=>x.r=='d'&&x.alive);app.innerHTML=S.hv==1?`<div class="c ctr"><div class="em">🔍</div><h2>Khusus ${d.nm}</h2><p class="s">Serahkan HP ke Detektif.</p><button id="y">Tampilkan petunjuk</button><button class="g" id="n">Batal</button></div>`:`<div class="c ctr card"><div class="em">🔍</div><p>Salah satu dari <b>${S.hn}</b> adalah penyusup.</p><button id="n">Tutup</button></div>`;const y=document.getElementById('y');if(y)y.onclick=()=>{S.hv=2;render()};document.getElementById('n').onclick=()=>{S.hv=0;render()};return}
 app.innerHTML=`<h2>Diskusi</h2><p class="s">Setiap pemain menyebut satu petunjuk tentang katanya (tanpa menyebut katanya). Mulai dari <b>${S.start}</b>, lalu voting.</p>
@@ -135,8 +141,10 @@ function after(){const al=S.P.filter(p=>p.alive),bad=al.filter(p=>p.r=='u'||p.r=
 if(S.cur.r=='b')return end('Badut menang! 🤡 Kamu berhasil divoting keluar.');
 if(!bad)return end('Warga menang! 🎉 Semua penyusup tereliminasi.');
 if(bad>=al.length-bad)return end('Penyusup menang! 🕵️ Warga kalah jumlah.');
-S.step='play';S.start=R(al).nm;render()}
+S.step='play';S.start=pick(al);render()}
 function end(m){cfg.prev=S.P.map(p=>p.nm);S.step='end';S.msg=m;render()}
+const pick=a=>{const f=a.filter(x=>x.r!='m');return R(cfg.mwf||!f.length?a:f).nm};
+const hid=p=>cfg.hide&&(p.r=='w'||p.r=='u');
 const vb=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
 const EM={w:'🧑‍🌾',u:'🕵️',m:'👻',b:'🤡',d:'🔍'};
 function hint(){const d=S.P.find(x=>x.r=='d'&&x.alive);if(!d)return;if(!S.hn){const sus=R(S.P.filter(x=>x.alive&&(x.r=='u'||x.r=='m')));const o=R(S.P.filter(x=>x.alive&&x!==sus&&x!==d));S.hn=sh([sus.nm,o.nm]).join(' atau ')}
