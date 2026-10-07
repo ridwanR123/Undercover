@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><title>Undercover</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"><meta name="theme-color" content="#c0392b">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f4ef;--card:#fff;--tx:#1d1b18;--mu:#7a746b;--ac:#c0392b;--bd:#e3ded3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161a;--card:#232228;--tx:#f1eee8;--mu:#9d97a6;--ac:#e5584a;--bd:#34323c}}
+:root[data-theme="dark"]{--bg:#17161a;--card:#232228;--tx:#f1eee8;--mu:#9d97a6;--ac:#e5584a;--bd:#34323c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+#app{max-width:520px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:28px;margin:4px 0}h2{font-size:20px;margin:18px 0 8px}p.s{color:var(--mu);margin:0 0 12px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:10px 0}
+label{display:block;font-weight:600;margin:10px 0 4px}
+textarea,input,select{width:100%;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:110px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{font:inherit;font-weight:600;border:0;border-radius:12px;padding:13px 16px;background:var(--ac);color:#fff;width:100%;cursor:pointer;margin-top:10px}
+button.g{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{padding:6px 11px;border:1px solid var(--bd);border-radius:99px;font-size:14px;cursor:pointer;color:var(--mu)}
+.chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.big{font-size:34px;font-weight:800;text-align:center;margin:16px 0}.ctr{text-align:center}
+.pl{display:flex;justify-content:space-between;align-items:center;gap:10px}.pl button{width:auto;margin:0;padding:8px 14px}
+.dead{opacity:.45;text-decoration:line-through}.tag{font-size:13px;color:var(--mu)}
+.role{display:inline-block;padding:3px 10px;border-radius:99px;background:var(--ac);color:#fff;font-size:14px}
+body{min-height:100vh;background:radial-gradient(900px 500px at 15% -10%,color-mix(in srgb,var(--ac) 28%,transparent),transparent 60%),radial-gradient(700px 400px at 100% 10%,color-mix(in srgb,#6c5ce7 22%,transparent),transparent 60%),var(--bg);background-attachment:fixed}
+h1{font-size:36px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,var(--ac),#8e5cf0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.c{border-radius:20px;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+button{background:linear-gradient(135deg,var(--ac),#8e5cf0);box-shadow:0 6px 16px color-mix(in srgb,var(--ac) 35%,transparent);transition:transform .12s;border-radius:14px;padding:15px}
+button:active{transform:scale(.97)}button.g{background:var(--card);box-shadow:none}
+.em{font-size:60px;line-height:1.1;margin:4px 0}.big{font-size:40px}input{font-size:18px}
+.card{animation:pop .35s ease}@keyframes pop{from{transform:scale(.9) rotateY(70deg);opacity:0}}
+.prog{display:flex;gap:5px;margin:6px 0 10px}.prog i{flex:1;height:6px;border-radius:9px;background:var(--bd)}.prog i.d{background:var(--ac)}.prog i.n{background:#8e5cf0}
+.stp{display:flex;align-items:center;justify-content:center;gap:22px}.stp b{font-size:38px;min-width:50px;text-align:center}.stp button{width:56px;height:56px;padding:0;font-size:26px;margin:0}
+.av{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--ac),#8e5cf0);color:#fff;font-size:15px;margin-right:6px}
+.role{padding:5px 14px;font-weight:700;background:linear-gradient(135deg,var(--ac),#8e5cf0)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin:12px 0}
+.pc{position:relative;text-align:center;background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:16px 8px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.07);transition:transform .12s,border-color .12s}
+.pc:active{transform:scale(.95);border-color:var(--ac)}.pc .nm{font-weight:700;font-size:17px;margin-top:8px;word-break:break-word}
+.pc.dead{opacity:.5;cursor:default;text-decoration:none;filter:grayscale(1)}
+.av.lg{width:58px;height:58px;font-size:26px;margin:0}
+.st{position:absolute;top:6px;right:8px;font-size:11px;font-weight:700;color:var(--ac)}
+html,body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}body{user-select:none;-webkit-user-select:none}input,textarea{user-select:text;-webkit-user-select:text}
+#app{padding-top:max(14px,var(--safe-area-inset-top,0px));padding-bottom:max(30px,var(--safe-area-inset-bottom,0px))}
+.r-w{background:#1f9d6b!important}.r-u{background:linear-gradient(135deg,#d6336c,#e8590c)!important}.r-m{background:#495057!important}.r-b{background:linear-gradient(135deg,#9c36b5,#f783ac)!important}.r-d{background:linear-gradient(135deg,#1c7ed6,#15aabf)!important}
+.hero{text-align:center;padding:8px 0 0}.hero .em{font-size:76px}.hero h1{margin:0}
+</style></head><body><div id="app"></div>
+<script>
+const W={
+"Makanan":"Nasi Goreng,Mie Goreng,Bakso,Soto,Rendang,Sate,Gado-gado,Pecel,Rawon,Opor,Martabak,Pempek,Siomay,Batagor,Nasi Uduk,Bubur Ayam,Ketoprak,Tahu Isi,Tempe,Gudeg",
+"Minuman":"Kopi,Teh,Susu,Jus Jeruk,Es Cendol,Es Teler,Boba,Cokelat Panas,Air Kelapa,Wedang Jahe,Limun,Soda,Yogurt,Smoothie",
+"Buah":"Apel,Pir,Jeruk,Mangga,Durian,Nangka,Pisang,Pepaya,Semangka,Melon,Anggur,Stroberi,Rambutan,Manggis,Salak,Nanas",
+"Hewan":"Kucing,Anjing,Harimau,Singa,Kelinci,Hamster,Buaya,Komodo,Bebek,Angsa,Ayam,Merpati,Paus,Hiu,Lumba-lumba,Kuda,Zebra,Sapi,Kerbau",
+"Transportasi":"Motor,Sepeda,Mobil,Bus,Kereta,Becak,Ojek,Taksi,Pesawat,Helikopter,Kapal,Perahu,Skuter,Truk",
+"Profesi":"Dokter,Perawat,Guru,Dosen,Polisi,Tentara,Koki,Pelayan,Pilot,Masinis,Hakim,Jaksa,Petani,Nelayan,Arsitek,Insinyur",
+"Tempat":"Sekolah,Kampus,Masjid,Gereja,Pasar,Mal,Bioskop,Teater,Pantai,Danau,Gunung,Bukit,Bandara,Stasiun,Rumah Sakit,Puskesmas",
+"Perabot":"Sendok,Garpu,Piring,Mangkuk,Gelas,Cangkir,Kursi,Sofa,Meja,Lemari,Kasur,Bantal,Selimut,Handuk,Sabun,Sampo",
+"Elektronik":"Handphone,Tablet,Laptop,Komputer,TV,Proyektor,Kulkas,Freezer,Kipas,AC,Headset,Speaker,Kamera,Webcam",
+"Olahraga":"Sepak Bola,Futsal,Basket,Voli,Bulu Tangkis,Tenis,Renang,Selam,Lari,Maraton,Tinju,Karate,Panahan,Menembak",
+"Hiburan":"Konser,Festival,Sirkus,Opera,Film,Sinetron,Drama,Komik,Novel,Cerpen,Podcast,Radio",
+"Alat Tulis":"Pensil,Pulpen,Penghapus,Tip-Ex,Penggaris,Busur,Buku,Kertas,Spidol,Stabilo,Gunting,Cutter",
+"Pakaian":"Kaos,Kemeja,Jaket,Sweater,Celana Jeans,Celana Pendek,Sandal,Sepatu,Topi,Peci,Kerudung,Syal,Kaus Kaki,Sarung",
+"Cuaca":"Hujan,Gerimis,Banjir,Tsunami,Gempa,Longsor,Petir,Kilat,Angin,Badai,Pelangi,Kabut,Salju,Embun",
+"Perasaan":"Marah,Kesal,Sedih,Kecewa,Senang,Bahagia,Takut,Cemas,Malu,Canggung,Bosan,Lelah",
+"Aplikasi":"WhatsApp,Telegram,Instagram,Facebook,TikTok,YouTube,Gojek,Grab,Shopee,Tokopedia,Spotify,Netflix",
+"Kota":"Jakarta,Bandung,Surabaya,Semarang,Yogyakarta,Solo,Medan,Palembang,Makassar,Bali,Malang,Bogor,Cirebon,Kuningan",
+"Bumbu":"Garam,Gula,Merica,Ketumbar,Bawang Merah,Bawang Putih,Jahe,Kunyit,Lengkuas,Cabai,Tomat,Terasi",
+"Musik":"Gitar,Bass,Piano,Keyboard,Drum,Kendang,Biola,Cello,Seruling,Saksofon,Angklung,Gamelan",
+"Hobi":"Memancing,Berkemah,Mendaki,Bersepeda,Berkebun,Memasak,Menjahit,Melukis,Menggambar,Fotografi,Menulis,Membaca",
+"Sekolah":"Ujian,Kuis,PR,Tugas,Rapor,Ijazah,Upacara,Pramuka,OSIS,Kantin,Perpustakaan,Laboratorium",
+"Perayaan":"Lebaran,Natal,Tahun Baru,Ulang Tahun,Pernikahan,Aqiqah,Kemerdekaan,Imlek,Waisak,Nyepi",
+"Cemilan":"Keripik,Kerupuk,Cokelat,Permen,Es Krim,Donat,Roti,Kue,Brownies,Pisang Goreng,Cilok,Cimol,Seblak"
+};
+for(const k in W)W[k]=W[k].split(',');
+const total=Object.values(W).reduce((a,b)=>a+b.length,0);
+const RN={w:'Warga',u:'Undercover',m:'Mr. White',b:'Badut',d:'Detektif'};
+const RD={w:'Dapat kata yang sama dengan mayoritas. Temukan penyusup!',u:'Kata kamu MIRIP tapi berbeda. Menyamarlah!',m:'Kamu tidak punya kata. Tebak kata Warga untuk menang!',b:'Dapat kata Warga. Kamu menang jika kamu yang divoting keluar!',d:'Dapat kata Warga plus petunjuk siapa yang mencurigakan.'};
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const app=document.getElementById('app');
+let cfg={n:6,u:1,m:1,b:0,d:0,cats:new Set(Object.keys(W)),custom:''};
+let S={};
+function setup(msg){cfg.prev=null;S={step:'setup'};
+app.innerHTML=`<div class="hero"><div class="em">🕵️</div><h1>Undercover</h1></div><p class="s ctr">Game tebak kata untuk ${Object.keys(W).length} kategori, ${total} kata, dan ribuan kombinasi pasangan. Cukup satu HP.</p>
+${msg?`<div class="c" style="border-color:var(--ac)">${msg}</div>`:''}
+<div class="c"><label class="ctr">Jumlah pemain</label><div class="stp"><button class="g" id="mn">−</button><b id="nv">${cfg.n}</b><button class="g" id="pl">+</button></div><p class="tag ctr">Tiap pemain mengetik namanya sendiri saat menerima HP.</p>
+<div class="row"><div><label>Undercover</label><select id="u">${[0,1,2,3].map(i=>`<option ${i==cfg.u?'selected':''}>${i}</option>`).join('')}</select></div>
+<div><label>Mr. White</label><select id="m">${[0,1,2].map(i=>`<option ${i==cfg.m?'selected':''}>${i}</option>`).join('')}</select></div>
+<div><label>Badut</label><select id="b">${[0,1].map(i=>`<option ${i==cfg.b?'selected':''}>${i}</option>`).join('')}</select></div>
+<div><label>Detektif</label><select id="d">${[0,1].map(i=>`<option ${i==cfg.d?'selected':''}>${i}</option>`).join('')}</select></div></div></div>
+<div class="c"><label>Kategori kata</label><div class="chips" id="ch">${Object.keys(W).map(k=>`<span class="chip ${cfg.cats.has(k)?'on':''}" data-k="${k}">${k}</span>`).join('')}</div>
+<label>Pasangan kata sendiri (format: kata1|kata2, satu per baris)</label><textarea id="cu" placeholder="Kopi|Teh">${cfg.custom}</textarea></div>
+<button id="go">Mulai Game</button>
+<div class="c"><b>Peran:</b><br>${Object.keys(RN).map(k=>`<div class="tag"><b>${RN[k]}</b>: ${RD[k]}</div>`).join('')}</div>`;
+document.getElementById('ch').onclick=e=>{const k=e.target.dataset.k;if(!k)return;cfg.cats.has(k)?cfg.cats.delete(k):cfg.cats.add(k);e.target.classList.toggle('on')};
+const nv=document.getElementById('nv');document.getElementById('mn').onclick=()=>{cfg.n=Math.max(4,cfg.n-1);nv.textContent=cfg.n};document.getElementById('pl').onclick=()=>{cfg.n=Math.min(20,cfg.n+1);nv.textContent=cfg.n};document.getElementById('go').onclick=start}
+function start(){const g=i=>document.getElementById(i).value;
+if(document.getElementById('cu')){cfg.custom=g('cu');['u','m','b','d'].forEach(k=>cfg[k]=+g(k))}
+const n=cfg.n,bad=cfg.u+cfg.m;
+if(bad<1)return setup('Butuh minimal 1 Undercover atau Mr. White.');
+if(n-bad-cfg.b-cfg.d<1||n-bad<=bad)return setup('Terlalu banyak peran khusus. Warga harus lebih banyak dari penyusup.');
+const opts=[];cfg.cats.forEach(c=>opts.push({c}));
+cfg.custom.split('\n').forEach(l=>{const p=l.split('|').map(s=>s.trim().replace(/[<>"&]/g,''));if(p.length==2&&p[0]&&p[1]&&p[0]!=p[1])opts.push({p})});
+if(!opts.length)return setup('Pilih minimal satu kategori atau isi pasangan kata sendiri.');
+const o=R(opts);let pair,cat='Kustom';
+if(o.c){cat=o.c;pair=sh(W[o.c]).slice(0,2)}else pair=sh(o.p);
+const roles=sh([...Array(cfg.u).fill('u'),...Array(cfg.m).fill('m'),...Array(cfg.b).fill('b'),...Array(cfg.d).fill('d'),...Array(n-bad-cfg.b-cfg.d).fill('w')]);
+const P=roles.map(r=>({nm:'',r,alive:true,word:r=='u'?pair[1]:r=='m'?'(tidak ada)':pair[0]}));
+S={step:'reveal',pool:cfg.prev,P,i:0,show:false,cat,pair,start:null};render()}
+function render(){const{step}=S;
+if(step=='reveal'){const p=S.P[S.i],last=S.i==S.P.length-1,av=(S.pool||[]).filter(n=>!S.P.some(x=>x.nm==n));
+app.innerHTML=`<div class="prog">${S.P.map((x,k)=>`<i class="${k<S.i?'d':k==S.i?'n':''}"></i>`).join('')}</div><p class="s ctr">Pemain ${S.i+1} dari ${S.P.length}</p>
+${!p.nm?`<div class="c ctr"><div class="em">👋</div><h2>Siapa namamu?</h2>${av.length?`<p class="s">Pilih namamu</p><div class="grid">${av.map(n=>`<div class="pc" data-p="${n}"><b class="av lg">${n[0].toUpperCase()}</b><div class="nm">${n}</div></div>`).join('')}</div><p class="s">atau tulis nama baru:</p>`:''}<input id="nmi" placeholder="Ketik namamu" maxlength="14" autocomplete="off">${S.err?'<p class="s" style="color:var(--ac)">Nama sudah dipakai, pilih nama lain.</p>':''}<button id="nb">Lanjut</button></div>`
+:!S.show?`<div class="c ctr"><div class="em">🎴</div><div class="big">${p.nm}</div><p class="s">Pastikan hanya kamu yang melihat layar.</p><button id="sw">👁 Ketuk untuk lihat peran</button></div>`
+:`<div class="c ctr card"><div class="em">${EM[p.r]}</div><span class="role r-${p.r}">${RN[p.r]}</span><div class="big">${p.word}</div>${p.r=='d'?'<p class="s">Petunjukmu ada di layar diskusi.</p>':''}<p class="s">${RD[p.r]}</p><button id="nx">${last?'Sembunyikan & mulai diskusi':'Sembunyikan & oper HP'}</button></div>`}`;
+const $=id=>document.getElementById(id);
+if(!p.nm){if(!av.length)$('nmi').focus();app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{p.nm=b.dataset.p;render()});$('nb').onclick=()=>{const v=$('nmi').value.trim().replace(/[<>"&]/g,'');if(!v)return;if(S.P.some(x=>x.nm.toLowerCase()==v.toLowerCase())){S.err=1;return render()}p.nm=v;S.err=0;render()}}
+else if(!S.show)$('sw').onclick=()=>{S.show=true;vb(30);render()};
+else $('nx').onclick=()=>{S.show=false;if(!last)S.i++;else{S.step='play';S.start=R(S.P.filter(x=>x.r!='m')).nm}render()}}
+else if(step=='play'){const al=S.P.filter(p=>p.alive);
+if(S.pend){const p=S.pend;app.innerHTML=`<div class="c ctr"><div class="em">🗳️</div><h2>Keluarkan ${p.nm}?</h2><button id="y">Ya, keluarkan</button><button class="g" id="n">Batal</button></div>`;document.getElementById('y').onclick=()=>{S.pend=null;elim(p)};document.getElementById('n').onclick=()=>{S.pend=null;render()};return}
+if(S.mv){if(S.mv==1){app.innerHTML=`<h2 class="ctr">Siapa kamu?</h2><p class="s ctr">Ketuk namamu. Pastikan pemain lain tidak melihat layar.</p><div class="grid">${al.map(p=>`<div class="pc" data-n="${p.nm}"><b class="av lg">${p.nm[0].toUpperCase()}</b><div class="nm">${p.nm}</div></div>`).join('')}</div><button class="g" id="n">Batal</button>`;app.querySelectorAll('.pc').forEach(b=>b.onclick=()=>{S.mv=S.P.find(x=>x.nm==b.dataset.n);render()})}
+else{const p=S.mv;app.innerHTML=`<div class="c ctr card"><div class="em">${EM[p.r]}</div><p class="s">${p.nm}, perankmu:</p><span class="role r-${p.r}">${RN[p.r]}</span><div class="big">${p.word}</div><p class="s">${RD[p.r]}</p><button id="n">Sembunyikan</button></div>`}
+document.getElementById('n').onclick=()=>{S.mv=0;render()};return}
+if(S.hv){const d=S.P.find(x=>x.r=='d'&&x.alive);app.innerHTML=S.hv==1?`<div class="c ctr"><div class="em">🔍</div><h2>Khusus ${d.nm}</h2><p class="s">Serahkan HP ke Detektif.</p><button id="y">Tampilkan petunjuk</button><button class="g" id="n">Batal</button></div>`:`<div class="c ctr card"><div class="em">🔍</div><p>Salah satu dari <b>${S.hn}</b> adalah penyusup.</p><button id="n">Tutup</button></div>`;const y=document.getElementById('y');if(y)y.onclick=()=>{S.hv=2;render()};document.getElementById('n').onclick=()=>{S.hv=0;render()};return}
+app.innerHTML=`<h2>Diskusi</h2><p class="s">Setiap pemain menyebut satu petunjuk tentang katanya (tanpa menyebut katanya). Mulai dari <b>${S.start}</b>, lalu voting.</p>
+<div class="grid">${S.P.map(p=>`<div class="pc ${p.alive?'':'dead'}" data-n="${p.nm}">${p.nm==S.start&&p.alive?'<span class="st">⭐ Mulai</span>':''}<b class="av lg">${p.nm[0].toUpperCase()}</b><div class="nm">${p.nm}</div><div class="tag">${p.alive?'Ketuk untuk voting':RN[p.r]}</div></div>`).join('')}</div><button class="g" id="mw">🔎 Lihat kataku</button>${S.P.some(x=>x.r=='d'&&x.alive)?'<button class="g" id="dt">🔍 Petunjuk Detektif</button>':''}<p class="tag ctr">${al.length} pemain tersisa</p>`;
+document.getElementById('mw').onclick=()=>{S.mv=1;render()};const dt=document.getElementById('dt');if(dt)dt.onclick=hint;app.querySelectorAll('.pc:not(.dead)').forEach(b=>b.onclick=()=>{S.pend=S.P.find(x=>x.nm==b.dataset.n);render()})}
+else if(step=='guess'){app.innerHTML=`<h2>Kesempatan terakhir Mr. White</h2><div class="c"><p>${S.cur.nm} tereliminasi. Tebak kata Warga untuk menang!</p><input id="gs" placeholder="Tebakan kata"><button id="gb">Tebak</button></div>`;
+document.getElementById('gb').onclick=()=>{const v=document.getElementById('gs').value.trim().toLowerCase();v==S.pair[0].toLowerCase()?end('Mr. White menang! 🎉 Tebakannya benar.'):after()}}
+else if(step=='out'){app.innerHTML=`<h2 class="ctr">${S.cur.nm} keluar</h2><div class="c ctr"><span class="role r-${S.cur.r}">${RN[S.cur.r]}</span></div><button id="ok">Lanjut</button>`;document.getElementById('ok').onclick=()=>S.cur.r=='m'?(S.step='guess',render()):after()}
+else if(step=='end'){app.innerHTML=`<div class="em ctr">${/Penyusup|Mr\. White/.test(S.msg)?'🕵️':/Badut/.test(S.msg)?'🤡':'🏆'}</div><h2 class="ctr">${S.msg}</h2><div class="c"><p class="tag">Kategori: ${S.cat} · Warga: <b>${S.pair[0]}</b> · Undercover: <b>${S.pair[1]}</b></p>${S.P.map(p=>`<div class="pl" style="padding:4px 0"><span>${p.nm}</span><span class="tag">${RN[p.r]}</span></div>`).join('')}</div><button id="ed">🏠 Kembali ke Menu</button><button class="g" id="ag">Main lagi (pengaturan sama)</button>`;
+document.getElementById('ag').onclick=()=>{cfg.n=cfg.prev.length;start()};document.getElementById('ed').onclick=()=>setup()}}
+function elim(p){vb(150);S.hn=null;p.alive=false;S.cur=p;S.step='out';render()}
+function after(){const al=S.P.filter(p=>p.alive),bad=al.filter(p=>p.r=='u'||p.r=='m').length;
+if(S.cur.r=='b')return end('Badut menang! 🤡 Kamu berhasil divoting keluar.');
+if(!bad)return end('Warga menang! 🎉 Semua penyusup tereliminasi.');
+if(bad>=al.length-bad)return end('Penyusup menang! 🕵️ Warga kalah jumlah.');
+S.step='play';S.start=R(al).nm;render()}
+function end(m){cfg.prev=S.P.map(p=>p.nm);S.step='end';S.msg=m;render()}
+const vb=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
+const EM={w:'🧑‍🌾',u:'🕵️',m:'👻',b:'🤡',d:'🔍'};
+function hint(){const d=S.P.find(x=>x.r=='d'&&x.alive);if(!d)return;if(!S.hn){const sus=R(S.P.filter(x=>x.alive&&(x.r=='u'||x.r=='m')));const o=R(S.P.filter(x=>x.alive&&x!==sus&&x!==d));S.hn=sh([sus.nm,o.nm]).join(' atau ')}
+S.hv=1;render()}
+setup();
+</script></body></html>
