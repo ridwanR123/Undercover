@@ -49,31 +49,27 @@ html,body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}body{
 </style></head><body><div id="app"></div>
 <script>
 const W={
-"Makanan":"Nasi Goreng,Mie Goreng,Bakso,Soto,Rendang,Sate,Gado-gado,Pecel,Rawon,Opor,Martabak,Pempek,Siomay,Batagor,Nasi Uduk,Bubur Ayam,Ketoprak,Tahu Isi,Tempe,Gudeg",
-"Minuman":"Kopi,Teh,Susu,Jus Jeruk,Es Cendol,Es Teler,Boba,Cokelat Panas,Air Kelapa,Wedang Jahe,Limun,Soda,Yogurt,Smoothie",
-"Buah":"Apel,Pir,Jeruk,Mangga,Durian,Nangka,Pisang,Pepaya,Semangka,Melon,Anggur,Stroberi,Rambutan,Manggis,Salak,Nanas",
-"Hewan":"Kucing,Anjing,Harimau,Singa,Kelinci,Hamster,Buaya,Komodo,Bebek,Angsa,Ayam,Merpati,Paus,Hiu,Lumba-lumba,Kuda,Zebra,Sapi,Kerbau",
-"Transportasi":"Motor,Sepeda,Mobil,Bus,Kereta,Becak,Ojek,Taksi,Pesawat,Helikopter,Kapal,Perahu,Skuter,Truk",
-"Profesi":"Dokter,Perawat,Guru,Dosen,Polisi,Tentara,Koki,Pelayan,Pilot,Masinis,Hakim,Jaksa,Petani,Nelayan,Arsitek,Insinyur",
-"Tempat":"Sekolah,Kampus,Masjid,Gereja,Pasar,Mal,Bioskop,Teater,Pantai,Danau,Gunung,Bukit,Bandara,Stasiun,Rumah Sakit,Puskesmas",
-"Perabot":"Sendok,Garpu,Piring,Mangkuk,Gelas,Cangkir,Kursi,Sofa,Meja,Lemari,Kasur,Bantal,Selimut,Handuk,Sabun,Sampo",
-"Elektronik":"Handphone,Tablet,Laptop,Komputer,TV,Proyektor,Kulkas,Freezer,Kipas,AC,Headset,Speaker,Kamera,Webcam",
-"Olahraga":"Sepak Bola,Futsal,Basket,Voli,Bulu Tangkis,Tenis,Renang,Selam,Lari,Maraton,Tinju,Karate,Panahan,Menembak",
-"Hiburan":"Konser,Festival,Sirkus,Opera,Film,Sinetron,Drama,Komik,Novel,Cerpen,Podcast,Radio",
-"Alat Tulis":"Pensil,Pulpen,Penghapus,Tip-Ex,Penggaris,Busur,Buku,Kertas,Spidol,Stabilo,Gunting,Cutter",
-"Pakaian":"Kaos,Kemeja,Jaket,Sweater,Celana Jeans,Celana Pendek,Sandal,Sepatu,Topi,Peci,Kerudung,Syal,Kaus Kaki,Sarung",
-"Cuaca":"Hujan,Gerimis,Banjir,Tsunami,Gempa,Longsor,Petir,Kilat,Angin,Badai,Pelangi,Kabut,Salju,Embun",
-"Perasaan":"Marah,Kesal,Sedih,Kecewa,Senang,Bahagia,Takut,Cemas,Malu,Canggung,Bosan,Lelah",
-"Aplikasi":"WhatsApp,Telegram,Instagram,Facebook,TikTok,YouTube,Gojek,Grab,Shopee,Tokopedia,Spotify,Netflix",
-"Kota":"Jakarta,Bandung,Surabaya,Semarang,Yogyakarta,Solo,Medan,Palembang,Makassar,Bali,Malang,Bogor,Cirebon,Kuningan",
-"Bumbu":"Garam,Gula,Merica,Ketumbar,Bawang Merah,Bawang Putih,Jahe,Kunyit,Lengkuas,Cabai,Tomat,Terasi",
-"Musik":"Gitar,Bass,Piano,Keyboard,Drum,Kendang,Biola,Cello,Seruling,Saksofon,Angklung,Gamelan",
-"Hobi":"Memancing,Berkemah,Mendaki,Bersepeda,Berkebun,Memasak,Menjahit,Melukis,Menggambar,Fotografi,Menulis,Membaca",
-"Sekolah":"Ujian,Kuis,PR,Tugas,Rapor,Ijazah,Upacara,Pramuka,OSIS,Kantin,Perpustakaan,Laboratorium",
-"Perayaan":"Lebaran,Natal,Tahun Baru,Ulang Tahun,Pernikahan,Aqiqah,Kemerdekaan,Imlek,Waisak,Nyepi",
-"Cemilan":"Keripik,Kerupuk,Cokelat,Permen,Es Krim,Donat,Roti,Kue,Brownies,Pisang Goreng,Cilok,Cimol,Seblak"
-};
-for(const k in W)W[k]=W[k].split(',');
+"Makanan Khas":"Rendang|Gulai,Soto Betawi|Coto Makassar,Gudeg|Pecel,Papeda|Bubur Sagu,Pempek|Tekwan,Siomay|Batagor,Sate Madura|Sate Padang,Nasi Liwet|Nasi Uduk,Rawon|Soto Lamongan,Bakso|Mie Ayam,Ayam Betutu|Ayam Taliwang,Bika Ambon|Kue Lapis,Lemper|Arem-arem,Klepon|Onde-onde,Dodol|Wajik,Mie Aceh|Mie Goreng,Rujak Cingur|Gado-gado,Soto Banjar|Soto Kudus,Ketupat Kandangan|Lontong Sayur,Sop Buntut|Sop Iga,Konro|Sop Saudara,Nasi Kuning|Nasi Tumpeng,Ikan Bakar|Ikan Asam Pedas,Bubur Manado|Bubur Ayam,Nasi Padang|Nasi Rames,Karedok|Lalapan,Asinan Betawi|Rujak Buah,Gudeg Jogja|Nasi Gudeg Solo,Binte Biluhuta|Sup Jagung,Pindang Palembang|Pindang Patin",
+"Jajanan":"Keripik|Kerupuk,Cilok|Cimol,Seblak|Baso Aci,Pisang Goreng|Tahu Isi,Bakwan|Risol,Martabak Manis|Martabak Telur,Es Krim|Es Lilin,Kue Cubit|Kue Pukis,Cokelat|Permen,Donat|Roti,Lumpia|Risoles,Pukis|Serabi,Klepon|Getuk,Kerak Telor|Ketoprak,Odading|Roti Bakar,Cireng|Tahu Crispy,Dadar Gulung|Pancake,Cendol|Es Campur,Bakpia|Pia,Wingko|Bolu,Lapis Legit|Brownies,Kue Putu|Kue Lupis,Sempol|Sosis Bakar",
+"Minuman":"Kopi Gayo|Kopi Toraja,Es Cendol|Es Dawet,Wedang Jahe|Bandrek,Es Teler|Es Campur,Es Doger|Es Cincau,Teh Tarik|Teh Botol,Bir Pletok|Wedang Uwuh,Kopi Tubruk|Kopi Susu,Air Kelapa|Air Tebu,Jamu|Teh Herbal,Es Jeruk|Es Lemon,Susu Jahe|Susu Kedelai,Kopi Joss|Kopi Hitam,Sarsaparilla|Soda Gembira,Es Kelapa Muda|Es Degan",
+"Buah":"Durian|Nangka,Salak Pondoh|Salak Bali,Manggis|Rambutan,Duku|Langsat,Markisa|Buah Naga,Cempedak|Nangka,Jambu Air|Jambu Biji,Belimbing|Jeruk Bali,Sirsak|Srikaya,Kedondong|Mangga Muda,Nanas|Pepaya,Sawo|Kesemek,Semangka|Melon,Pisang Ambon|Pisang Raja,Jeruk Nipis|Jeruk Lemon,Apel Malang|Apel Fuji,Mangga Harum Manis|Mangga Gedong,Kelapa|Aren",
+"Bumbu":"Jahe|Kunyit,Kencur|Lengkuas,Cengkeh|Pala,Kayu Manis|Kapulaga,Ketumbar|Jintan,Serai|Daun Jeruk,Bawang Merah|Bawang Putih,Terasi|Petis,Sambal Terasi|Sambal Matah,Kemiri|Kacang Tanah,Merica|Cabai,Santan|Susu,Kecap Manis|Kecap Asin,Gula Aren|Gula Pasir,Daun Salam|Daun Pandan",
+"Kota":"Medan|Pekanbaru,Palembang|Jambi,Bandung|Bogor,Semarang|Surabaya,Solo|Yogyakarta,Malang|Batu,Makassar|Manado,Banjarmasin|Pontianak,Balikpapan|Samarinda,Denpasar|Mataram,Kupang|Ambon,Jayapura|Sorong,Padang|Bukittinggi,Cirebon|Tegal,Banda Aceh|Lhokseumawe,Palu|Kendari,Banjarbaru|Martapura,Palangkaraya|Pangkalan Bun,Batam|Tanjung Pinang,Bengkulu|Lampung,Serang|Tangerang,Jakarta|Surabaya,Kediri|Madiun,Gorontalo|Manado,Ternate|Tidore",
+"Wisata":"Borobudur|Prambanan,Raja Ampat|Wakatobi,Danau Toba|Danau Maninjau,Bromo|Semeru,Pantai Kuta|Pantai Sanur,Pulau Komodo|Pulau Padar,Monas|Tugu Jogja,Malioboro|Braga,Ubud|Seminyak,Tanah Lot|Uluwatu,Bunaken|Derawan,Rinjani|Merapi,Kawah Ijen|Kawah Putih,Pasar Terapung|Pasar Malam,Lembah Baliem|Lembah Harau,Sabang|Anyer,Kepulauan Seribu|Karimunjawa,Labuan Bajo|Lombok,Dieng|Lembang,Tangkuban Perahu|Papandayan,Bukit Lawang|Tangkahan,Pulau Weh|Pulau Belitung,Taman Safari|Kebun Binatang",
+"Pakaian & Budaya":"Batik|Tenun,Songket|Ulos,Kebaya|Baju Bodo,Blangkon|Udeng,Peci|Songkok,Sarung|Kain Panjang,Keris|Badik,Rencong|Mandau,Noken|Tas Anyaman,Tanjak|Destar,Kain Sasirangan|Batik Tulis,Kebaya Encim|Kebaya Kartini,Tengkuluk|Selendang,Mahkota Siger|Mahkota Cenderawasih,Tato Mentawai|Tato Dayak,Peci Hitam|Topi Koko",
+"Rumah & Bangunan":"Rumah Gadang|Tongkonan,Honai|Rumah Betang,Joglo|Limasan,Rumah Panggung|Rumah Lanting,Pura|Candi,Masjid|Musholla,Keraton|Istana,Benteng|Gapura,Rumah Bubungan Tinggi|Rumah Gadang,Tugu|Monumen,Menara|Mercusuar,Pasar|Mal,Warung|Kedai",
+"Tarian & Musik":"Tari Kecak|Tari Barong,Tari Saman|Tari Piring,Reog|Kuda Lumping,Angklung|Kolintang,Gamelan|Talempong,Sasando|Sape,Tifa|Kendang,Tari Pendet|Tari Legong,Wayang Kulit|Wayang Golek,Ondel-ondel|Barongsai,Debus|Reog Ponorogo,Dangdut|Campursari,Keroncong|Gambus,Suling|Seruling,Rebana|Gendang,Tari Jaipong|Tari Topeng,Tari Tor-tor|Tari Kancet,Gamelan Bali|Gamelan Jawa",
+"Hewan Nusantara":"Komodo|Biawak,Orangutan|Bekantan,Harimau Sumatra|Macan Tutul,Badak Jawa|Gajah Sumatra,Cenderawasih|Merak,Anoa|Banteng,Tarsius|Kukang,Elang Jawa|Rajawali,Maleo|Jalak Bali,Tapir|Babirusa,Penyu|Dugong,Kakatua|Nuri,Kerbau|Sapi,Kucing|Anjing,Kuda|Zebra,Buaya|Komodo,Ayam|Bebek,Hiu|Paus,Burung Hantu|Kelelawar,Lumba-lumba|Pesut,Kuskus|Kanguru,Siamang|Owa",
+"Transportasi":"Becak|Bajaj,Ojek|Angkot,Delman|Andong,Kapal Pinisi|Jukung,Kereta Api|Commuter Line,TransJakarta|MRT,Bemo|Odong-odong,Bentor|Becak,Klotok|Speedboat,Kapal Ferry|Kapal Roro,Ojek Online|Taksi Online,Helikopter|Pesawat,Sepeda Ontel|Sepeda Gunung,Dokar|Cidomo,Bus Malam|Travel,Truk|Pickup,Motor|Skuter,Kapal Selam|Kapal Perang",
+"Profesi":"Dokter|Perawat,Guru|Dosen,Polisi|Satpam,Petani|Nelayan,Koki|Pelayan,Pilot|Masinis,Hakim|Jaksa,Arsitek|Insinyur,Dalang|Sutradara,Tukang Becak|Sopir Angkot,Barista|Bartender,Polisi|Tentara,Bidan|Dokter Gigi,Kurir|Ojol,Pedagang|Pengusaha,Penyanyi|Pelawak,Tukang Kayu|Tukang Batu,Penjahit|Desainer,Wartawan|Penulis,Montir|Teknisi,Petugas Pemadam|Penyelamat,Satpam|Hansip",
+"Alam":"Gunung|Bukit,Danau|Waduk,Sungai|Rawa,Hutan|Kebun,Pantai|Pelabuhan,Hujan|Gerimis,Banjir|Longsor,Gempa|Tsunami,Pulau|Tanjung,Selat|Teluk,Gua|Ngarai,Air Terjun|Air Mancur,Sawah|Ladang,Mangrove|Terumbu Karang,Hutan Hujan|Savana,Pasang|Ombak,Kabut|Embun,Pelangi|Petir",
+"Rumah Tangga":"Sabun|Sampo,Kursi|Bangku,Sendok|Garpu,Piring|Mangkuk,Gelas|Cangkir,Kasur|Tikar,Bantal|Guling,Selimut|Sarung,Handuk|Lap,Payung|Jas Hujan,Sapu|Pel,Kipas|AC,Panci|Wajan,Kulkas|Freezer,Lemari|Rak,Cermin|Kaca,Tas|Koper,Dompet|Tas Selempang,Sandal Jepit|Sepatu Sandal,Rice Cooker|Dispenser,Kompor|Oven,Ember|Gayung,Lampu|Senter,Pintu|Jendela",
+"Alat Tulis & Sekolah":"Pensil|Pulpen,Penghapus|Tip-Ex,Spidol|Stabilo,Buku|Kertas,Penggaris|Jangka,Gunting|Cutter,Kalkulator|Sempoa,Ujian|Kuis,PR|Tugas,Rapor|Ijazah,Upacara|Pramuka,OSIS|Karang Taruna,Kantin|Warung,Skripsi|Tesis,KKN|Magang,Seragam|Jas Almamater,Wisuda|Perpisahan,Papan Tulis|Proyektor",
+"Teknologi":"WhatsApp|Telegram,Instagram|TikTok,Gojek|Grab,Shopee|Tokopedia,YouTube|Netflix,Spotify|Joox,Handphone|Tablet,Laptop|Komputer,Headset|Speaker,Kamera|Webcam,Wifi|Hotspot,Charger|Powerbank,Google Maps|Waze,DANA|GoPay,Facebook|Twitter,Telepon|SMS,Pulsa|Kuota,ATM|Mobile Banking",
+"Olahraga & Permainan":"Sepak Bola|Futsal,Bulu Tangkis|Tenis,Basket|Voli,Renang|Selam,Lari|Maraton,Pencak Silat|Karate,Tinju|Gulat,Panahan|Menembak,Sepak Takraw|Bola Voli,Egrang|Bakiak,Panjat Tebing|Mendaki,Catur|Dam-daman,Petak Umpet|Gobak Sodor,Layangan|Gasing,Kelereng|Congklak,Lompat Tali|Engklek,Ular Tangga|Monopoli,Domino|Kartu Remi,Karapan Sapi|Pacuan Kuda,Pacu Jalur|Balap Perahu,Panjat Pinang|Balap Karung",
+"Tradisi & Perayaan":"Tujuh Belasan|Upacara Bendera,Sekaten|Grebeg,Mudik|Pulang Kampung,Arisan|Reuni,Gotong Royong|Kerja Bakti,Ronda Malam|Siskamling,Tumpeng|Nasi Kuning,Halal Bihalal|Syukuran,Pernikahan Adat|Resepsi,Ulang Tahun|Syukuran,Pasar Malam|Bazar,Karnaval|Pawai,Pesta Rakyat|Festival,Kenduri|Selamatan,Kondangan|Hajatan,Mudik Lebaran|Libur Panjang",
+"Perasaan":"Marah|Kesal,Sedih|Kecewa,Senang|Bahagia,Takut|Cemas,Malu|Canggung,Bosan|Jenuh,Lelah|Ngantuk,Rindu|Galau,Bangga|Sombong,Iri|Cemburu,Gugup|Panik,Santai|Malas,Kaget|Heran"};
+for(const k in W)W[k]=W[k].split(',').map(p=>p.split('|'));
 const total=Object.values(W).reduce((a,b)=>a+b.length,0);
 const RN={w:'Warga',u:'Undercover',m:'Mr. White',b:'Badut',d:'Detektif'};
 const RD={w:'Dapat kata yang sama dengan mayoritas. Temukan penyusup!',u:'Kata kamu MIRIP tapi berbeda. Menyamarlah!',m:'Kamu tidak punya kata. Tebak kata Warga untuk menang!',b:'Dapat kata Warga. Kamu menang jika kamu yang divoting keluar!',d:'Dapat kata Warga plus petunjuk siapa yang mencurigakan.'};
@@ -83,7 +79,7 @@ const app=document.getElementById('app');
 let cfg={snd:1,mwf:0,hide:1,n:6,u:1,m:1,b:0,d:0,cats:new Set(Object.keys(W)),custom:''};
 let S={};
 function setup(msg){cfg.prev=null;S={step:'setup'};
-app.innerHTML=`<div class="hero"><div class="em">🕵️</div><h1>Undercover</h1></div><p class="s ctr">Game tebak kata untuk ${Object.keys(W).length} kategori, ${total} kata, dan ribuan kombinasi pasangan. Cukup satu HP.</p>
+app.innerHTML=`<div class="hero"><div class="em">🕵️</div><h1>Undercover</h1></div><p class="s ctr">${total} pasangan kata dari Sabang sampai Merauke di ${Object.keys(W).length} kategori. Cukup satu HP.</p>
 ${msg?`<div class="c" style="border-color:var(--ac)">${msg}</div>`:''}
 <div class="c"><label class="ctr">Jumlah pemain</label><div class="stp"><button class="g" id="mn">−</button><b id="nv">${cfg.n}</b><button class="g" id="pl">+</button></div><p class="tag ctr">Tiap pemain mengetik namanya sendiri saat menerima HP.</p>
 <div class="row"><div><label>Undercover</label><select id="u">${[0,1,2,3].map(i=>`<option ${i==cfg.u?'selected':''}>${i}</option>`).join('')}</select></div>
@@ -105,11 +101,10 @@ if(document.getElementById('cu')){cfg.custom=g('cu');['u','m','b','d'].forEach(k
 const n=cfg.n,bad=cfg.u+cfg.m;
 if(bad<1)return setup('Butuh minimal 1 Undercover atau Mr. White.');
 if(n-bad-cfg.b-cfg.d<1||n-bad<=bad)return setup('Terlalu banyak peran khusus. Warga harus lebih banyak dari penyusup.');
-const opts=[];cfg.cats.forEach(c=>opts.push({c}));
+const opts=[];cfg.cats.forEach(c=>W[c].forEach(p=>opts.push({c,p})));
 cfg.custom.split('\n').forEach(l=>{const p=l.split('|').map(s=>s.trim().replace(/[<>"&]/g,''));if(p.length==2&&p[0]&&p[1]&&p[0]!=p[1])opts.push({p})});
 if(!opts.length)return setup('Pilih minimal satu kategori atau isi pasangan kata sendiri.');
-const o=R(opts);let pair,cat='Kustom';
-if(o.c){cat=o.c;pair=sh(W[o.c]).slice(0,2)}else pair=sh(o.p);
+const cu=opts.filter(x=>!x.c),ca=opts.filter(x=>x.c),o=R(cu.length&&(!ca.length||Math.random()<.5)?cu:ca),cat=o.c||'Kustom',pair=sh(o.p);
 const roles=sh([...Array(cfg.u).fill('u'),...Array(cfg.m).fill('m'),...Array(cfg.b).fill('b'),...Array(cfg.d).fill('d'),...Array(n-bad-cfg.b-cfg.d).fill('w')]);
 const P=roles.map(r=>({nm:'',r,alive:true,word:r=='u'?pair[1]:r=='m'?'(tidak ada)':pair[0]}));
 S={step:'reveal',pool:cfg.prev,P,i:0,show:false,cat,pair,start:null};render()}
