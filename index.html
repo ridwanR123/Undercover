@@ -80,7 +80,7 @@ const RD={w:'Dapat kata yang sama dengan mayoritas. Temukan penyusup!',u:'Kata k
 const R=a=>a[Math.floor(Math.random()*a.length)];
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const app=document.getElementById('app');
-let cfg={mwf:0,hide:1,n:6,u:1,m:1,b:0,d:0,cats:new Set(Object.keys(W)),custom:''};
+let cfg={snd:1,mwf:0,hide:1,n:6,u:1,m:1,b:0,d:0,cats:new Set(Object.keys(W)),custom:''};
 let S={};
 function setup(msg){cfg.prev=null;S={step:'setup'};
 app.innerHTML=`<div class="hero"><div class="em">🕵️</div><h1>Undercover</h1></div><p class="s ctr">Game tebak kata untuk ${Object.keys(W).length} kategori, ${total} kata, dan ribuan kombinasi pasangan. Cukup satu HP.</p>
@@ -92,7 +92,8 @@ ${msg?`<div class="c" style="border-color:var(--ac)">${msg}</div>`:''}
 <div><label>Detektif</label><select id="d">${[0,1].map(i=>`<option ${i==cfg.d?'selected':''}>${i}</option>`).join('')}</select></div></div></div>
 <div class="c"><b>⚙️ Pengaturan</b>
 <label class="sw"><span>Sembunyikan peran<br><small class="tag">Warga & Undercover hanya lihat kata</small></span><input type="checkbox" id="hr" ${cfg.hide?'checked':''}></label>
-<label class="sw"><span>Mr. White boleh jalan pertama<br><small class="tag">Jika mati, giliran pertama bebas siapa saja</small></span><input type="checkbox" id="mf" ${cfg.mwf?'checked':''}></label></div>
+<label class="sw"><span>Mr. White boleh jalan pertama<br><small class="tag">Jika mati, giliran pertama bebas siapa saja</small></span><input type="checkbox" id="mf" ${cfg.mwf?'checked':''}></label>
+<label class="sw"><span>Suara & getaran<br><small class="tag">Efek bunyi saat eliminasi dan pemenang</small></span><input type="checkbox" id="sn" ${cfg.snd?'checked':''}></label></div>
 <div class="c"><label>Kategori kata</label><div class="chips" id="ch">${Object.keys(W).map(k=>`<span class="chip ${cfg.cats.has(k)?'on':''}" data-k="${k}">${k}</span>`).join('')}</div>
 <label>Pasangan kata sendiri (format: kata1|kata2, satu per baris)</label><textarea id="cu" placeholder="Kopi|Teh">${cfg.custom}</textarea></div>
 <button id="go">Mulai Game</button>
@@ -100,7 +101,7 @@ ${msg?`<div class="c" style="border-color:var(--ac)">${msg}</div>`:''}
 document.getElementById('ch').onclick=e=>{const k=e.target.dataset.k;if(!k)return;cfg.cats.has(k)?cfg.cats.delete(k):cfg.cats.add(k);e.target.classList.toggle('on')};
 const nv=document.getElementById('nv');document.getElementById('mn').onclick=()=>{cfg.n=Math.max(4,cfg.n-1);nv.textContent=cfg.n};document.getElementById('pl').onclick=()=>{cfg.n=Math.min(20,cfg.n+1);nv.textContent=cfg.n};document.getElementById('go').onclick=start}
 function start(){const g=i=>document.getElementById(i).value;
-if(document.getElementById('cu')){cfg.custom=g('cu');['u','m','b','d'].forEach(k=>cfg[k]=+g(k));cfg.hide=document.getElementById('hr').checked?1:0;cfg.mwf=document.getElementById('mf').checked?1:0}
+if(document.getElementById('cu')){cfg.custom=g('cu');['u','m','b','d'].forEach(k=>cfg[k]=+g(k));cfg.hide=document.getElementById('hr').checked?1:0;cfg.mwf=document.getElementById('mf').checked?1:0;cfg.snd=document.getElementById('sn').checked?1:0}
 const n=cfg.n,bad=cfg.u+cfg.m;
 if(bad<1)return setup('Butuh minimal 1 Undercover atau Mr. White.');
 if(n-bad-cfg.b-cfg.d<1||n-bad<=bad)return setup('Terlalu banyak peran khusus. Warga harus lebih banyak dari penyusup.');
@@ -136,16 +137,20 @@ document.getElementById('gb').onclick=()=>{const v=document.getElementById('gs')
 else if(step=='out'){app.innerHTML=`<h2 class="ctr">${S.cur.nm} keluar</h2><div class="c ctr"><span class="role r-${S.cur.r}">${RN[S.cur.r]}</span></div><button id="ok">Lanjut</button>`;document.getElementById('ok').onclick=()=>S.cur.r=='m'?(S.step='guess',render()):after()}
 else if(step=='end'){app.innerHTML=`<div class="em ctr">${/Penyusup|Mr\. White/.test(S.msg)?'🕵️':/Badut/.test(S.msg)?'🤡':'🏆'}</div><h2 class="ctr">${S.msg}</h2><div class="c"><p class="tag">Kategori: ${S.cat} · Warga: <b>${S.pair[0]}</b> · Undercover: <b>${S.pair[1]}</b></p>${S.P.map(p=>`<div class="pl" style="padding:4px 0"><span>${p.nm}</span><span class="tag">${RN[p.r]}</span></div>`).join('')}</div><button id="ed">🏠 Kembali ke Menu</button><button class="g" id="ag">Main lagi (pengaturan sama)</button>`;
 document.getElementById('ag').onclick=()=>{cfg.n=cfg.prev.length;start()};document.getElementById('ed').onclick=()=>setup()}}
-function elim(p){vb(150);S.hn=null;p.alive=false;S.cur=p;S.step='out';render()}
+function elim(p){vb(150);snd(NEU);setTimeout(()=>snd(RS[p.r]),750);S.hn=null;p.alive=false;S.cur=p;S.step='out';render()}
 function after(){const al=S.P.filter(p=>p.alive),bad=al.filter(p=>p.r=='u'||p.r=='m').length;
 if(S.cur.r=='b')return end('Badut menang! 🤡 Kamu berhasil divoting keluar.');
 if(!bad)return end('Warga menang! 🎉 Semua penyusup tereliminasi.');
 if(bad>=al.length-bad)return end('Penyusup menang! 🕵️ Warga kalah jumlah.');
 S.step='play';S.start=pick(al);render()}
-function end(m){cfg.prev=S.P.map(p=>p.nm);S.step='end';S.msg=m;render()}
+function end(m){snd(/^Warga/.test(m)?ES.w:/^Penyusup/.test(m)?ES.u:/Badut/.test(m)?RS.b:ES.m);cfg.prev=S.P.map(p=>p.nm);S.step='end';S.msg=m;render()}
 const pick=a=>{const f=a.filter(x=>x.r!='m');return R(cfg.mwf||!f.length?a:f).nm};
+let AC;const snd=a=>{if(!cfg.snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state=='suspended')AC.resume();let t=AC.currentTime;a.forEach(([f,d,ty])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.25,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.8})}catch(e){}};
+const NEU=[[220,.18,'triangle'],[165,.3,'triangle']];
+const RS={w:[[300,.2,'sawtooth'],[200,.4,'sawtooth']],d:[[300,.2,'sawtooth'],[200,.4,'sawtooth']],u:[[392,.12,'square'],[523,.12,'square'],[659,.12,'square'],[784,.35,'square']],m:[[330,.15,'sawtooth'],[247,.15,'sawtooth'],[330,.15,'sawtooth'],[185,.4,'sawtooth']],b:[[600,.08],[800,.08],[600,.08],[800,.08],[1000,.25]]};
+const ES={w:[[523,.12],[659,.12],[784,.12],[1047,.45]],u:[[392,.2,'sawtooth'],[311,.2,'sawtooth'],[233,.55,'sawtooth']],m:[[523,.12,'square'],[659,.12,'square'],[784,.12,'square'],[1047,.45,'square']]};
 const hid=p=>cfg.hide&&(p.r=='w'||p.r=='u');
-const vb=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
+const vb=n=>{try{cfg.snd&&navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
 const EM={w:'🧑‍🌾',u:'🕵️',m:'👻',b:'🤡',d:'🔍'};
 function hint(){const d=S.P.find(x=>x.r=='d'&&x.alive);if(!d)return;if(!S.hn){const sus=R(S.P.filter(x=>x.alive&&(x.r=='u'||x.r=='m')));const o=R(S.P.filter(x=>x.alive&&x!==sus&&x!==d));S.hn=sh([sus.nm,o.nm]).join(' atau ')}
 S.hv=1;render()}
